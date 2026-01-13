@@ -18,7 +18,6 @@ export default function RootLayout({
         <ClientOnly>
           {/* <LiquidBackground /> */}
           <VideoBackground />
-          <BirdsOverlay />
           <Cursor />
           <AnimatedMenu />
            <PageLoader loading={false} />
