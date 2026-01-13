@@ -18,6 +18,11 @@
     --foreground: #ededed;
   }
 }
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
 
 body {
   background: var(--background);
