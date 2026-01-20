@@ -49,8 +49,8 @@ export default function Contact() {
           <ContactCard
             icon={<Github size={22} />}
             title="GitHub"
-            value="github.com/maokimhuong"
-            link="https://github.com/maokimhuong"
+            value="maokimhuong"
+            link="https://github.com/maokimhuong19000"
           />
 
           {/* LinkedIn */}
@@ -58,7 +58,7 @@ export default function Contact() {
             icon={<Linkedin size={22} />}
             title="LinkedIn"
             value="linkedin.com/in/mao-kimhuong"
-            link="https://www.linkedin.com/in/mao-kimhuong"
+            link="https://www.linkedin.com/in/maokimhuong/"
           />
 
           {/* Instagram */}
@@ -66,7 +66,7 @@ export default function Contact() {
             icon={<Instagram size={22} />}
             title="Instagram"
             value="@maokimhuong"
-            link="https://instagram.com/maokimhuong"
+            link="https://www.instagram.com/kimhuongmao?igsh=MXBscm0zOXpxczhp&utm_source=qr"
           />
 
           {/* Telegram */}
@@ -82,7 +82,7 @@ export default function Contact() {
             icon={<Facebook size={22} />}
             title="Facebook"
             value="facebook.com/maokimhuong"
-            link="https://facebook.com/maokimhuong"
+            link="https://facebook.com/kimhuong.1010"
           />
         </motion.div>
       </div>

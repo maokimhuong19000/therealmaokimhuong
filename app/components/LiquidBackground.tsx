@@ -85,7 +85,7 @@ export function VideoBackground() {
       className="fixed inset-0 w-full h-full object-cover -z-50 pointer-events-none"
       style={{ objectFit: "cover" }}
     >
-      <source src="/assets/video/bgvideo.mp4" type="video/mp4" />
+      <source src="/assets/video/b2g.mp4" type="video/mp4" />
     </video>
   );
 }
