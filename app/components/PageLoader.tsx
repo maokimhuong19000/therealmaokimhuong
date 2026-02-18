@@ -37,7 +37,7 @@ export default function PageLoader({
 
     timerRef.current = window.setInterval(() => {
       setI((v) => (v + 1) % frames.length);
-    }, intervalMs);
+    }, intervalMs); 
 
     return () => {
       if (timerRef.current) window.clearInterval(timerRef.current);

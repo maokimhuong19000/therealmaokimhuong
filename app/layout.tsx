@@ -16,11 +16,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative antialiased">
         <ClientOnly>
-          {/* <LiquidBackground /> */}
-          <VideoBackground />
+          <LiquidBackground />
+          {/* <VideoBackground /> */}
           <Cursor />
           <AnimatedMenu />
-           <PageLoader loading={false} />
+           {/* <PageLoader loading={false} /> */}
         </ClientOnly>
 
         <TransitionWrapper>{children}</TransitionWrapper>

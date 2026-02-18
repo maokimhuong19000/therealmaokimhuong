@@ -73,8 +73,8 @@ export default function Contact() {
           <ContactCard
             icon={<Send size={22} />}
             title="Telegram"
-            value="@maokimhuong"
-            link="https://t.me/maokimhuong"
+            value="@mao_kimhuong"
+            link="https://t.me/mao_kimhuong"
           />
 
           {/* Facebook */}
