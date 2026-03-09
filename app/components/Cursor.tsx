@@ -1,51 +1,87 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function Cursor() {
-  const [dot, setDot] = useState({ x: 0, y: 0 });
-  const [ring, setRing] = useState({ x: 0, y: 0 });
-  const [isDesktop, setIsDesktop] = useState(false);
+  const mx = useMotionValue(-100);
+  const my = useMotionValue(-100);
+  const sx = useSpring(mx, { stiffness: 500, damping: 38 });
+  const sy = useSpring(my, { stiffness: 500, damping: 38 });
+  const [visible, setVisible] = useState(false);
+  const [clicking, setClicking] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
-    // Detect if device supports hover (desktop)
-    if (window.matchMedia("(hover: hover)").matches) {
-      setIsDesktop(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isDesktop) return; // Don't add event listeners on mobile
-
     const move = (e: MouseEvent) => {
-      setDot({ x: e.clientX, y: e.clientY });
-      setRing(prev => ({
-        x: prev.x + (e.clientX - prev.x) * 0.12,
-        y: prev.y + (e.clientY - prev.y) * 0.12,
-      }));
+      mx.set(e.clientX);
+      my.set(e.clientY);
+      setVisible(true);
+      const el = e.target as Element;
+      setHovering(
+        el.closest("a, button, [data-cursor]") !== null
+      );
     };
-
+    const down = () => setClicking(true);
+    const up   = () => setClicking(false);
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, [isDesktop]);
+    window.addEventListener("mousedown", down);
+    window.addEventListener("mouseup", up);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mousedown", down);
+      window.removeEventListener("mouseup", up);
+    };
+  }, [mx, my]);
 
-  if (!isDesktop) return null; // Hide completely on mobile
+  if (!visible) return null;
 
   return (
     <>
-      <div
-        className="pointer-events-none fixed z-50 h-2 w-2 rounded-full bg-white"
+      {/* Lagging square */}
+      <motion.div
         style={{
-          transform: `translate(${dot.x - 4}px, ${dot.y - 4}px)`,
+          position: "fixed", top: 0, left: 0,
+          pointerEvents: "none", zIndex: 99998,
+          x: sx, y: sy,
+          translateX: "-50%", translateY: "-50%",
         }}
-      />
+      >
+        <motion.div
+          animate={{
+            width:  hovering ? 36 : clicking ? 6 : 20,
+            height: hovering ? 36 : clicking ? 6 : 20,
+            borderRadius: hovering ? "50%" : "0%",
+            borderColor: hovering ? "#c8291a" : "#1a1815",
+            opacity: clicking ? 0.4 : 0.25,
+          }}
+          transition={{ duration: 0.18 }}
+          style={{
+            border: "1px solid #1a1815",
+            background: "transparent",
+          }}
+        />
+      </motion.div>
 
-      <div
-        className="pointer-events-none fixed z-40 h-10 w-10 rounded-full border border-white/40"
+      {/* Sharp dot */}
+      <motion.div
         style={{
-          transform: `translate(${ring.x - 20}px, ${ring.y - 20}px)`,
+          position: "fixed", top: 0, left: 0,
+          pointerEvents: "none", zIndex: 99999,
+          x: mx, y: my,
+          translateX: "-50%", translateY: "-50%",
         }}
-      />
+      >
+        <motion.div
+          animate={{
+            width:   clicking ? 10 : 4,
+            height:  clicking ? 10 : 4,
+            background: hovering ? "#c8291a" : "#0e0c0a",
+          }}
+          transition={{ duration: 0.1 }}
+          style={{ borderRadius: 0 }}
+        />
+      </motion.div>
     </>
   );
 }

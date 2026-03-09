@@ -1,22 +1,16 @@
 "use client";
+import { FC, ReactNode } from "react";
+import { motion } from "framer-motion";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
+const TransitionWrapper: FC<{ children: ReactNode }> = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 12 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+  >
+    {children}
+  </motion.div>
+);
 
-export default function TransitionWrapper({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
-  );
-}
+export default TransitionWrapper;

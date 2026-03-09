@@ -1,152 +1,368 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
-import { GraduationCap, Zap, Layout, Database, MousePointer2 } from "lucide-react";
+import { ReactNode } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import Nav from "../components/Nav";
+import TransitionWrapper from "../components/TransitionWrapper";
 
-// Motion Variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+const TIMELINE = [
+  {
+    year: "2025-Present",
+    role: "Fullstack Web Developer",
+    co: "iOne Cambodia",
+    note: "Building core product 0→1",
   },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  {
+    year: "2024-2025",
+    role: "Fullstack Web Developer",
+    co: "BluePrint Technology Company",
+    note: "10+ client projects",
   },
-};
+  {
+    year: "2023-2024",
+    role: "Web Developer Intern",
+    co: "INKLUSIVITY TECHNOLOGY",
+    note: "React, TypeScript, design systems",
+  },
+  {
+    year: "2022-2023",
+    role: "Junior Graphic Designer",
+    co: "THE FLORA",
+    note: "First 15 paid sites",
+  },
+];
 
-export default function AboutPage() {
+const BELIEFS = [
+  [
+    "Ship early, iterate fast",
+    "Working software beats perfect plans every time.",
+  ],
+  ["Code is communication", "Write for humans. Machines are flexible."],
+  ["Full ownership", "I care about the whole product — not just my slice."],
+  ["Performance is UX", "Slow apps lose users. Every ms counts."],
+];
+
+export default function AboutPage(): ReactNode {
   return (
-    <section className="min-h-screen w-full bg-[#030303] text-white selection:bg-white/10 selection:text-white overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-blue-500/5 blur-[120px]" />
-        <div className="absolute top-[40%] -right-[10%] w-[50%] h-[50%] rounded-full bg-purple-500/5 blur-[120px]" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-40">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 lg:grid-cols-12 gap-6"
-        >
-          {/* HERO */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-8 flex flex-col justify-end p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10"
+    <main style={{ background: "#f5f2ed", minHeight: "100vh" }}>
+      <Nav />
+      <TransitionWrapper>
+        <div style={{ padding: "14vh 0 12vh" }}>
+          {/* Hero */}
+          <div
+            style={{
+              padding: "0 6vw 8vh",
+              marginBottom: "8vh",
+              borderBottom: "1px solid #d4cfc6",
+            }}
           >
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
-              Mao <span className="text-white/30">Kim Huong.</span>
-            </h1>
-            <p className="mt-8 text-xl md:text-2xl text-white/60 max-w-xl font-light leading-relaxed">
-              A Web Developer bridging the gap between{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                logical systems
-              </span>{" "}
-              and{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                human experience
-              </span>.
-            </p>
-          </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{
+                fontFamily: "var(--font-label)",
+                fontSize: 9,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#b8b2a8",
+                marginBottom: 16,
+              }}
+            >
+              About
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.08,
+                duration: 0.9,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(72px, 13vw, 180px)",
+                lineHeight: 0.88,
+                letterSpacing: "0.02em",
+                color: "#0e0c0a",
+              }}
+            >
+              Hello<span style={{ color: "#c8291a" }}>,</span>
+              <br />
+              World<span style={{ color: "#c8291a" }}>.</span>
+            </motion.h1>
+          </div>
 
-          {/* MINDSET CARD */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-4 group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.02] p-8 transition-colors hover:bg-white/[0.04]"
+          {/* Two-col: photo + bio */}
+          <div
+            style={{
+              padding: "0 6vw",
+              display: "grid",
+              gridTemplateColumns: "340px 1fr",
+              gap: "6vw",
+              marginBottom: "10vh",
+            }}
           >
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <Zap className="w-8 h-8 text-yellow-500/50 group-hover:text-yellow-400 transition-colors" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-2">Philosophy</p>
-                <h3 className="text-2xl font-medium leading-snug italic text-white/90">
-                  "Technology is the tool, but experience is the memory."
-                </h3>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* PROFILE SUMMARY */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-5 rounded-[2.5rem] border border-white/10 bg-white/[0.02] p-8 md:p-10"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs uppercase tracking-widest text-white/40">
-                Open for Collaboration
-              </span>
-            </div>
-            <p className="text-lg text-white/70 leading-relaxed">
-              My background in design isn't just a "plus"—it's my foundation. I treat every line of code
-              as a visual element, ensuring that performance and aesthetics are never in conflict.
-            </p>
-          </motion.div>
-
-          {/* FOCUS GRID (Mini Bento) */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4"
-          >
-            {[
-              { icon: <Layout className="w-5 h-5" />, label: "UI Engineering", cat: "Frontend" },
-              { icon: <Database className="w-5 h-5" />, label: "System Logic", cat: "Backend" },
-              { icon: <MousePointer2 className="w-5 h-5" />, label: "Interaction", cat: "UX/UI" },
-            ].map((item, i) => (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              style={{ position: "relative" }}
+            >
+              <img
+                src="/profile.png"
+                alt="Profile"
+                style={{
+                  width: "100%",
+                  aspectRatio: "3/4",
+                  objectFit: "cover",
+                  filter: "grayscale(20%)",
+                  border: "1px solid #d4cfc6",
+                }}
+              />
               <div
-                key={i}
-                className="flex flex-col justify-between p-6 rounded-3xl border border-white/5 bg-white/[0.01] hover:border-white/20 hover:bg-white/[0.02] transition-all duration-300"
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: "#0e0c0a",
+                  padding: "14px 16px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
               >
-                <div className="text-white/30">{item.icon}</div>
-                <div className="mt-8">
-                  <p className="text-sm font-medium text-white/90">{item.label}</p>
-                  <p className="text-xs text-white/40">{item.cat}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* EDUCATION TIMELINE */}
-          <motion.div variants={itemVariants} className="lg:col-span-12 mt-12">
-            <div className="flex items-center gap-4 mb-10">
-              <GraduationCap className="w-6 h-6 text-white/40" />
-              <h2 className="text-3xl font-semibold tracking-tight">Academic Journey</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { title: "MIS Master’s Degree", org: "SETEC Institute", time: "2025 – Present", active: true },
-                { title: "MIS Bachelor’s Degree", org: "SETEC Institute", time: "2020 – 2024", active: false },
-                { title: "UX / UI Designer", org: "IT Step Academy", time: "2023 – 2024", active: false },
-              ].map((edu, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariants}
-                  className={`p-8 rounded-[2rem] border transition-all duration-500 ${
-                    edu.active
-                      ? "border-white/20 bg-white/[0.05] shadow-[0_0_40px_rgba(255,255,255,0.03)]"
-                      : "border-white/10 bg-transparent opacity-60 hover:opacity-100"
-                  }`}
+                <span
+                  style={{
+                    fontFamily: "var(--font-label)",
+                    fontSize: 9,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "#3d3935",
+                  }}
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
-                    {edu.time}
-                  </span>
-                  <h4 className="mt-3 text-xl font-medium text-white/90">{edu.title}</h4>
-                  <p className="mt-1 text-sm text-white/50">{edu.org}</p>
-                </motion.div>
-              ))}
+                  Status
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    color: "#c8291a",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  Open to work
+                </span>
+              </div>
+            </motion.div>
+
+            <div>
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontStyle: "italic",
+                  fontSize: "clamp(16px, 1.6vw, 20px)",
+                  color: "#3d3935",
+                  lineHeight: 1.75,
+                  marginBottom: 32,
+                }}
+              >
+                I'm a fullstack engineer who cares equally about clean
+                architecture and great user experience. 4+ years building
+                products end-to-end.
+              </motion.p>
+
+              <div style={{ borderTop: "1px solid #d4cfc6", paddingTop: 28 }}>
+                <p
+                  style={{
+                    fontFamily: "var(--font-label)",
+                    fontSize: 9,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "#b8b2a8",
+                    marginBottom: 20,
+                  }}
+                >
+                  What I believe
+                </p>
+                {BELIEFS.map(([title, desc], i) => (
+                  <motion.div
+                    key={title}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    viewport={{ once: true }}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "3vw",
+                      padding: "14px 0",
+                      borderBottom: "1px solid #e8e3da",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontStyle: "italic",
+                        fontSize: 13,
+                        color: "#0e0c0a",
+                      }}
+                    >
+                      {title}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: 12,
+                        color: "#6b6560",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div style={{ marginTop: 32 }}>
+                <a href="/resume.pdf" target="_blank" data-cursor>
+                  <motion.span
+                    whileHover={{ background: "#0e0c0a", color: "#f5f2ed" }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 10,
+                      padding: "10px 24px",
+                      border: "1px solid #0e0c0a",
+                      fontFamily: "var(--font-label)",
+                      fontSize: 9,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: "#0e0c0a",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    Download Resume
+                  </motion.span>
+                </a>
+              </div>
             </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
+          </div>
+
+          {/* Timeline */}
+          <div style={{ padding: "0 6vw" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 20,
+                marginBottom: 28,
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(28px, 3vw, 44px)",
+                  letterSpacing: "0.04em",
+                  color: "#0e0c0a",
+                }}
+              >
+                Experience
+              </h2>
+              <div style={{ flex: 1, height: 1, background: "#d4cfc6" }} />
+            </div>
+
+            {TIMELINE.map((item, i) => (
+              <motion.div
+                key={item.year}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+                viewport={{ once: true }}
+                style={{
+                  borderTop: "1px solid #d4cfc6",
+                  padding: "22px 0",
+                  display: "grid",
+                  gridTemplateColumns: "72px 1fr 1fr",
+                  gap: "3vw",
+                  alignItems: "center",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    color: "#c8291a",
+                  }}
+                >
+                  {item.year}
+                </span>
+                <p
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(16px, 1.8vw, 22px)",
+                    letterSpacing: "0.04em",
+                    color: "#0e0c0a",
+                  }}
+                >
+                  {item.role}
+                </p>
+                <div>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontStyle: "italic",
+                      fontSize: 13,
+                      color: "#3d3935",
+                      marginBottom: 2,
+                    }}
+                  >
+                    {item.co}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-label)",
+                      fontSize: 9,
+                      color: "#b8b2a8",
+                      letterSpacing: "0.12em",
+                    }}
+                  >
+                    {item.note}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+            <div style={{ borderTop: "1px solid #d4cfc6" }} />
+          </div>
+
+          {/* CTA */}
+          <div style={{ padding: "8vh 6vw 0", textAlign: "center" }}>
+            <Link href="/contact" data-cursor>
+              <motion.span
+                whileHover={{ background: "#0e0c0a", color: "#f5f2ed" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 12,
+                  padding: "14px 40px",
+                  background: "#c8291a",
+                  fontFamily: "var(--font-label)",
+                  fontSize: 9,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#f5f2ed",
+                  transition: "all 0.2s",
+                }}
+              >
+                Start a project
+              </motion.span>
+            </Link>
+          </div>
+        </div>
+      </TransitionWrapper>
+    </main>
   );
 }

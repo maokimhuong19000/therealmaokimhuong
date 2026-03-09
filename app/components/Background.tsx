@@ -1,23 +1,43 @@
 "use client";
+import { useEffect, useRef } from "react";
 
-import { motion } from "framer-motion";
-
+// Slow-moving radial gradient mesh — pure CSS-in-canvas, no libs
 export default function Background() {
-  return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* Purple orb */}
-      <motion.div
-        animate={{ x: [0, 200, 0], y: [0, -150, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl"
-      />
+  const ref = useRef<HTMLDivElement>(null);
 
-      {/* Blue orb */}
-      <motion.div
-        animate={{ x: [0, -200, 0], y: [0, 150, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl"
-      />
-    </div>
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let frame = 0;
+    let raf: number;
+
+    const tick = () => {
+      frame++;
+      const t = frame * 0.003;
+      const x1 = 50 + Math.sin(t * 0.7) * 20;
+      const y1 = 50 + Math.cos(t * 0.5) * 20;
+      const x2 = 50 + Math.sin(t * 0.4 + 2) * 25;
+      const y2 = 50 + Math.cos(t * 0.6 + 1) * 15;
+
+      el.style.background = `
+        radial-gradient(ellipse 60% 40% at ${x1}% ${y1}%, rgba(201,169,110,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at ${x2}% ${y2}%, rgba(138,100,180,0.03) 0%, transparent 70%),
+        var(--bg)
+      `;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: "fixed", inset: 0,
+        zIndex: 0, pointerEvents: "none",
+        transition: "background 0.5s ease",
+      }}
+    />
   );
 }

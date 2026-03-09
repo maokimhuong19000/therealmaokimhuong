@@ -1,15 +1,14 @@
 "use client";
-
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
-const menuItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Portfolio", href: "/portfolio" },
-  // { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+const LINKS = [
+  { href: "/",          label: "Home",      num: "01" },
+  { href: "/portfolio", label: "Work",      num: "02" },
+  { href: "/about",     label: "About",     num: "03" },
+  { href: "/service",   label: "Services",  num: "04" },
+  { href: "/contact",   label: "Contact",   num: "05" },
 ];
 
 export default function AnimatedMenu() {
@@ -17,47 +16,128 @@ export default function AnimatedMenu() {
 
   return (
     <>
-      {/* Toggle button */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full 
-                   bg-gray-600 text-white text-xl flex items-center 
-                   justify-center shadow-lg"
-      >
-        {open ? "×" : "≡"}
-      </button>
+      {/* Nav bar */}
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0,
+        zIndex: 1000, padding: "28px 6vw",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        mixBlendMode: "normal",
+      }}>
+        <Link href="/" style={{
+          fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 300,
+          color: "var(--ivory)", textDecoration: "none", letterSpacing: "0.06em",
+        }}>
+          AM
+        </Link>
 
-      {/* Menu overlay */}
+        {/* Burger */}
+        <button
+          onClick={() => setOpen(o => !o)}
+          data-cursor="hover"
+          aria-label="Toggle menu"
+          style={{
+            background: "none", border: "none", cursor: "none",
+            display: "flex", flexDirection: "column",
+            gap: 5, padding: 4,
+          }}
+        >
+          {[0, 1].map(i => (
+            <motion.span
+              key={i}
+              animate={open
+                ? { rotate: i === 0 ? 45 : -45, y: i === 0 ? 7 : -7 }
+                : { rotate: 0, y: 0 }
+              }
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                display: "block", width: 28, height: 1,
+                background: "var(--ivory)", transformOrigin: "center",
+              }}
+            />
+          ))}
+        </button>
+      </nav>
+
+      {/* Fullscreen overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 flex flex-col 
-                       items-center justify-center backdrop-blur-md"
+            key="menu"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "fixed", inset: 0, zIndex: 999,
+              background: "var(--surface)",
+              display: "flex", alignItems: "center",
+              padding: "0 8vw",
+            }}
           >
-            {menuItems.map((item, i) => (
-              <motion.div
-                key={item.href}
-                initial={{ y: 50, opacity: 0, scale: 0.9 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                exit={{ y: 50, opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
-                className="mb-6"
-              >
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block text-4xl md:text-6xl font-bold 
-                             uppercase text-white cursor-pointer 
-                             hover:scale-110 hover:text-gray-400 
-                             transition-all almendra-regular"
+            {/* Links */}
+            <div style={{ flex: 1 }}>
+              {LINKS.map((link, i) => (
+                <div key={link.href} style={{ overflow: "hidden", marginBottom: 8 }}>
+                  <motion.div
+                    initial={{ y: "110%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "110%" }}
+                    transition={{ delay: i * 0.06 + 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      data-cursor="hover"
+                      style={{ display: "flex", alignItems: "baseline", gap: 20, textDecoration: "none" }}
+                    >
+                      <span style={{
+                        fontFamily: "var(--font-mono)", fontSize: 10,
+                        color: "var(--gold)", letterSpacing: "0.2em",
+                        minWidth: 28,
+                      }}>
+                        {link.num}
+                      </span>
+                      <motion.span
+                        whileHover={{ x: 14, color: "var(--gold)" }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "clamp(40px, 7vw, 96px)",
+                          fontWeight: 300, color: "var(--ivory)",
+                          lineHeight: 1.05, letterSpacing: "-0.02em",
+                          display: "block",
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                    </Link>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+
+            {/* Side info */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              style={{
+                display: "flex", flexDirection: "column", gap: 24,
+                alignSelf: "flex-end", paddingBottom: "8vh",
+              }}
+            >
+              {["Twitter", "Instagram", "LinkedIn"].map(s => (
+                <a key={s} href="#" data-cursor="hover"
+                  style={{
+                    fontFamily: "var(--font-mono)", fontSize: 9,
+                    letterSpacing: "0.25em", color: "var(--subtle)",
+                    textDecoration: "none", textTransform: "uppercase",
+                  }}
                 >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
+                  {s}
+                </a>
+              ))}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
