@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Lora, DM_Mono, Archivo } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Cursor from "./Cursor";
 // import Cursor from "./components/Cursor";
 
