@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Mono } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 import Cursor from "./components/Cursor";
 
 const cormorant = Cormorant_Garamond({
