@@ -9,28 +9,28 @@ import TransitionWrapper from "../components/TransitionWrapper";
 const SERVICES = [
   {
     id: "01", title: "Fullstack Web App",
-    price: "From $8,000",
+    price: "From $8xx-up",
     desc: "End-to-end web application — PHP/Laravel backend, MySQL database, React or HTML/JS frontend. From requirements to live deployment.",
     stack: ["PHP", "Laravel", "MySQL", "REST API", "Firebase"],
     deliverables: ["Full source code", "API documentation", "Database schema", "1 month support"],
   },
   {
     id: "02", title: "API & Backend",
-    price: "From $4,000",
+    price: "From $4xx-up",
     desc: "RESTful APIs and backend systems built with PHP & Laravel. Auth, role management, Firebase integration, MySQL/SQL Server.",
     stack: ["PHP", "Laravel", "MySQL", "SQL Server", "Firebase"],
     deliverables: ["API docs", "Postman collection", "Auth system", "DB schema"],
   },
   {
     id: "03", title: "Frontend & UI",
-    price: "From $3,000",
+    price: "From $3xx-up",
     desc: "Responsive interfaces with React, HTML5, CSS3 and JavaScript. UI/UX design in Figma from wireframe to pixel-perfect implementation.",
     stack: ["React.js", "HTML5", "CSS3", "JavaScript", "Figma"],
     deliverables: ["Responsive design", "Figma mockups", "Cross-browser tested", "Performance audit"],
   },
   {
     id: "04", title: "Mobile App",
-    price: "From $5,000",
+    price: "From $5xx-up",
     desc: "Cross-platform mobile applications with Flutter and Firebase backend. iOS and Android from a single codebase.",
     stack: ["Flutter", "Firebase", "REST API", "MySQL"],
     deliverables: ["Flutter source code", "Firebase setup", "iOS & Android build", "App store guidance"],
